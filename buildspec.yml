@@ -16,7 +16,8 @@ phases:
     commands:
       # copy the contents of /build to S3
       - aws s3 cp --recursive --acl public-read ./build s3://aws-codebuild-test-s3/build/
-      - aws s3 cp --recursive --acl public-read ./appspec.yml s3://aws-codebuild-test-s3/
+      - aws s3 cp ./appspec.yml s3://aws-codebuild-test-s3/
+      - aws s3 cp ./deploy.sh s3://aws-codebuild-test-s3/
 
       # set the cache-control headers for service-worker.js to prevent
       # browser caching
