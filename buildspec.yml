@@ -14,13 +14,12 @@ phases:
       - npm run build
   post_build: # Build 완료 후에 할 작업
     commands:
-      - tar cvzf deploy.tar  --exclude src --exclude public --exclude README.md --exclude yarn.lock --exclude package.json --exclude package-lock.json --exclude .eslintcache --exclude .gitignore --exclude buildspec.yml --exclude node_modules *
-
       # copy the contents of /build to S3
-      - aws s3 cp deploy.tar s3://code-pipeline-test-s3/
       # - aws s3 cp --recursive --acl public-read ./build s3://code-pipeline-test-s3/
-      # - aws s3 cp ./appspec.yml s3://code-pipeline-test-s3/
-      # - aws s3 cp ./deploy.sh s3://code-pipeline-test-s3/
+      - tar cvzf deploy.tar build
+      - aws s3 cp deploy.tar s3://code-pipeline-test-s3/
+      - aws s3 cp ./appspec.yml s3://code-pipeline-test-s3/
+      - aws s3 cp ./deploy.sh s3://code-pipeline-test-s3/
 
       # set the cache-control headers for service-worker.js to prevent
       # browser caching
