@@ -8,10 +8,11 @@ phases:
       - npm install
   pre_build:
     commands:
-      - npm run lint
-      - npm run test
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
   build:
+    commans:
+      - npm run build
+  post_build:
     commands:
       - AWS_ACCOUNT_ID="$(aws sts get-caller-identity --output text --query Account)"
 
