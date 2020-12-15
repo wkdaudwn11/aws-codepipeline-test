@@ -21,7 +21,7 @@ phases:
       - aws s3 cp ./appspec.yml s3://code-pipeline-test-s3/
       - aws s3 cp ./deploy.sh s3://code-pipeline-test-s3/
 
-      # set the cache-control headers for service-worker.js to prevent
+      # set the cache-control headers for service-worker.js to prevent.
       # browser caching
       # - >
       #   aws s3 cp --acl public-read
