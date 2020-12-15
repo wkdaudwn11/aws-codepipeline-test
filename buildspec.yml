@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install: # 사전에 설치 할 항목
     runtime-versions:
-      nodejs: 10 # 노드 버전은 정해져있는 거 같음. 8, 10
+      nodejs: 12 # 노드 버전은 정해져있는 거 같음. 8, 10
   pre_build: # Build 전에 할 작업
     commands:
       - echo Installing source NPM dependencies...
@@ -37,5 +37,8 @@ phases:
   #   ./build/index.html s3://code-pipeline-test-s3/
 artifacts:
   files:
-    - "**/*"
-  # base-directory: build
+    - "build/*"
+    # base-directory: build
+cache:
+  paths:
+    - "build"
