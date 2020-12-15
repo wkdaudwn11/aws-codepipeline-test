@@ -16,13 +16,6 @@ phases:
     commands:
       - tar cvzf deploy.tar  --exclude src --exclude public --exclude README.md --exclude yarn.lock --exclude package.json --exclude package-lock.json --exclude .eslintcache --exclude .gitignore --exclude buildspec.yml --exclude node_modules *
 
-      - aws deploy create-deployment
-        --application-name codepipeline-test-deploy-app
-        --deployment-config-name CodeDeployDefault.AllAtOnce
-        --deployment-group-name deployment
-        --description "codedeploy from code-pipeline-test"
-        --s3-location bucket=code-pipeline-test-s3,bundleType=tar,key=deploy.tar
-
       # copy the contents of /build to S3
       # - aws s3 cp ./appspec.yml s3://code-pipeline-test-s3/
       # - aws s3 cp --recursive --acl public-read ./build s3://code-pipeline-test-s3/
