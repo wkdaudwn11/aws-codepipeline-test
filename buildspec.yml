@@ -12,8 +12,9 @@ phases:
     commands:
       - echo Build started on `date`
       - npm run build
-  # post_build: # Build 완료 후에 할 작업
-  # commands:
+  post_build: # Build 완료 후에 할 작업
+  commands:
+    - rm -rf node_modules
   # - tar cvzf deploy.tar  --exclude src --exclude public --exclude README.md --exclude yarn.lock --exclude package.json --exclude package-lock.json --exclude .eslintcache --exclude .gitignore --exclude buildspec.yml --exclude node_modules *
 
   # copy the contents of /build to S3
@@ -37,7 +38,7 @@ phases:
   #   ./build/index.html s3://code-pipeline-test-s3/
 artifacts:
   files:
-    - "build/*"
+    - "**/*"
     # base-directory: build
 cache:
   paths:
