@@ -17,7 +17,7 @@ phases:
       - tar cvzf deploy.tar  --exclude src --exclude public --exclude README.md --exclude yarn.lock --exclude package.json --exclude package-lock.json --exclude .eslintcache --exclude .gitignore --exclude buildspec.yml --exclude node_modules *
 
       # copy the contents of /build to S3
-      - aws s3 cp --recursive --acl public-read deploy.tar s3://code-pipeline-test-s3/
+      - aws s3 cp deploy.tar s3://code-pipeline-test-s3/
       # - aws s3 cp --recursive --acl public-read ./build s3://code-pipeline-test-s3/
       # - aws s3 cp ./appspec.yml s3://code-pipeline-test-s3/
       # - aws s3 cp ./deploy.sh s3://code-pipeline-test-s3/
@@ -37,5 +37,5 @@ phases:
       #   ./build/index.html s3://code-pipeline-test-s3/
 artifacts:
   files:
-    - "**/*"
-  base-directory: build
+    - "deploy.tar"
+  # base-directory: build
