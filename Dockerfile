@@ -19,7 +19,7 @@
 FROM nginx:1.16.0-alpine
 WORKDIR /app
 COPY ./build /app/build
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY /app/build /usr/share/nginx/html
 RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
 EXPOSE 80
