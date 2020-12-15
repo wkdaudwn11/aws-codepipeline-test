@@ -1,4 +1,1 @@
-#!/bin/bash
-
-cd /home/ec2-user/deploy/aws-codepipeline-test
-sh deploy.sh > /dev/null 2> /dev/null < /dev/null & 
+curl --data "aws-codepipeline-test execute-deploy.sh 실행됨" 'https://d-dive.slack.com/services/hooks/slackbot?token=7WOMm81rpCFOhNGNCt46ctS5&channel=%23mj-test'
