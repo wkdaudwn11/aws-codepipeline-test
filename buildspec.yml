@@ -20,11 +20,11 @@ phases:
         docker build . \
         -f Dockerfile \
         --build-arg ENV=dev \
-        --tag $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/{repo}:$IMAGE_TAG
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/{repo}:$IMAGE_TAG
+        --tag $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-test:$IMAGE_TAG
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-test:$IMAGE_TAG
       - |
         printf '[{"name":"{service name}","imageUri":"%s"}]' \
-        $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/{repo}:$IMAGE_TAG > imagedefinitions.json
+        $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/ecr-repo-test:$IMAGE_TAG > imagedefinitions.json
 
 artifacts:
   files:
