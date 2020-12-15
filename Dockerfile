@@ -11,15 +11,13 @@
 # RUN npm run build:dev
 
 # Temp Build environment
-# FROM node:12.8.0 as builder
-# WORKDIR /app
-# COPY ./build /app/build
+FROM node:12.8.0 as builder
+WORKDIR /app
+COPY ./build /app/build
 
 # Production environment
 FROM nginx:1.16.0-alpine
-WORKDIR /app
-COPY ./build /app/build
-COPY /app/build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
 RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
 EXPOSE 80
