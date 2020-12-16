@@ -1,33 +1,30 @@
 version: 0.2
+
 phases:
-  install:
+  install: # 사전에 설치 할 항목
     runtime-versions:
-      nodejs: 12
+      nodejs: 12 # 노드 버전은 정해져있는 거 같음. 8, 10
+  pre_build: # Build 전에 할 작업
     commands:
-      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay&
-      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
-      - echo "Install all of dependencies"
+      - echo Installing source NPM dependencies...
       - npm install
-  pre_build:
+  build: # Build
     commands:
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-  build:
-    commans:
+      - echo Build started on `date`
       - npm run build
-  post_build:
+  post_build: # Build 완료 후에 할 작업
     commands:
-      - AWS_ACCOUNT_ID="$(aws sts get-caller-identity --output text --query Account)"
-
-      - |
-        docker build . \
-        -f Dockerfile \
-        --build-arg ENV=dev \
-        --tag $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-test:$IMAGE_TAG
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-repo-test:$IMAGE_TAG
-      - |
-        printf '[{"name":"ecr-repo-test","imageUri":"%s"}]' \
-        $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/ecr-repo-test:$IMAGE_TAG > imagedefinitions.json
-
+      - rm -rf node_modules
+      - rm -rf buildspec.yml
+      - rm -rf package.json
+      - rm -rf package-lock.json
+      - rm -rf public
+      - rm -rf README.md
+      - rm -rf src
+      - rm -rf yarn.lock
 artifacts:
   files:
-    - imagedefinitions.json
+    - "**/*"
+cache:
+  paths:
+    - "build"
